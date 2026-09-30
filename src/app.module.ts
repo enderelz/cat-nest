@@ -5,11 +5,15 @@ import { CatsModule } from './cats/cats.module.js';
 import { DatabaseModule } from './database/database.module.js';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     CatsModule,
     DatabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     ThrottlerModule.forRoot({
       throttlers: [
         {

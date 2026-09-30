@@ -1,12 +1,16 @@
-import { Module } from '@nestjs/common';
+import { Inject, Module, OnModuleDestroy } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import Database from 'better-sqlite3';
 
 @Module({
   providers: [
     {
       provide: 'DATABASE_CONNECTION',
-      useFactory: () => {
-        const db = new Database('./src/database/db.sqlite').exec(
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        const db = new Database(config.get<string>('DB_PATH', './db.sqlite'));
+
+        db.exec(
           `PRAGMA journal_mode=WAL;
           CREATE TABLE IF NOT EXISTS cats(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,4 +25,10 @@ import Database from 'better-sqlite3';
   ],
   exports: ['DATABASE_CONNECTION'],
 })
-export class DatabaseModule {}
+export class DatabaseModule implements OnModuleDestroy {
+  constructor(@Inject('DATABASE_CONNECTION') private db: Database.Database) {}
+
+  onModuleDestroy() {
+    this.db.close();
+  }
+}
