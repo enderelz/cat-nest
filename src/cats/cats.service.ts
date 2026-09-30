@@ -113,7 +113,7 @@ export class CatsService {
       offset,
     });
     return this.db
-      .prepare('SELECT id, name, age FROM cats LIMIT ? OFFSET ?')
+      .prepare('SELECT id, name, age FROM cats ORDER BY id LIMIT ? OFFSET ?')
       .all(limit, offset) as Cat[];
   }
 
