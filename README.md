@@ -27,7 +27,20 @@ pnpm install
 pnpm start
 ```
 
-Runs on port 3000 by default, or whatever `PORT` you set.
+## Configuration
+
+The port and database file path are set through environment variables.
+
+1. Copy the example file: `cp .env.example .env`
+2. Edit `.env`:
+
+| Variable  | Default         | Description           |
+| --------- | --------------- | --------------------- |
+| `PORT`    | `3000`          | Port the API runs on  |
+| `DB_PATH` | `./db.sqlite`   | SQLite database file  |
+
+3. Restart the app for changes to take effect.
+
 
 ## Endpoints
 
