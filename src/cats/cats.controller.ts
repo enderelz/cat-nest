@@ -14,7 +14,6 @@ import {
 import { CatsService } from './cats.service.js';
 import { CreateCatDto } from './dto/create-cat.dto.js';
 import { UpdateCatDto } from './dto/update-cat.dto.js';
-import { PartialType } from '@nestjs/mapped-types';
 
 @Controller('cats')
 export class CatsController {
